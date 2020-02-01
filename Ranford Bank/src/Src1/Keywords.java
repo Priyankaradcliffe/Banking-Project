@@ -244,19 +244,15 @@ public class Keywords {
 		else
 			System.out.println("Alert not presented at webpage");
 		
-		
-		
-		
-
 	}
 
-	 /* Keyword:--> Click Update Inside Webtable on expected Branch record
+	 /* Keyword:--> Click Update Inside Web table on expected Branch record
 	 */
 	public void WebTable_Click_Update_Btn(String table_Xpath,String branchname,int Rownum, int Cellnum) throws Exception
 	{
 		boolean flag=false;
 		boolean flag1=false;
-		int x=0;
+		//int x=0;
 		do {
 			WebElement Table;
 			Table=driver.findElement(By.xpath(table_Xpath));
@@ -271,7 +267,7 @@ public class Keywords {
 			Link_Count=Pagelinks.size();
 			System.out.println(Link_Count);
 			
-			for (int i = x; i <= Link_Count-2; i++) 
+			for (int i = 0; i <= Link_Count-1; i++) 
 			{
 				//Find list of rows under each row
 				List<WebElement> Rows=Table.findElements(By.tagName("tr"));
@@ -318,9 +314,11 @@ public class Keywords {
 					break;	
 				}
 				
-				Pagelinks.get(i).click();
-				Thread.sleep(1000);
-				x=1;
+				if(!Pagelinks.get(i).getText().equals("..."))
+				{
+					Pagelinks.get(i).click();
+					Thread.sleep(1000);
+				}
 	
 				//Restore Table details to avoid staleElement reference exception
 				Table=driver.findElement(By.xpath(table_Xpath));
@@ -333,9 +331,11 @@ public class Keywords {
 				break;
 			}
 			
-		
 			String Next;
 			Next=Pagelinks.get(Link_Count-1).getText();
+			
+			
+			
 			
 			if(Next.equals("..."))
 			{
@@ -348,7 +348,7 @@ public class Keywords {
 			{
 				flag=false;	
 			}
-			
+		
 		} while (flag);
 	}
 
@@ -361,7 +361,7 @@ public class Keywords {
 	{
 		boolean flag=false;
 		boolean flag1=false;
-		int x=0;
+		
 		do {
 			WebElement Table;
 			Table=driver.findElement(By.xpath(table_Xpath));
@@ -376,7 +376,7 @@ public class Keywords {
 			Link_Count=Pagelinks.size();
 			System.out.println(Link_Count);
 			
-			for (int i = x; i <= Link_Count-2; i++) 
+			for (int i = 0; i <= Link_Count-1; i++) 
 			{
 				//Find list of rows under each row
 				List<WebElement> Rows=Table.findElements(By.tagName("tr"));
@@ -419,9 +419,13 @@ public class Keywords {
 					break;	
 				}
 				
-				Pagelinks.get(i).click();
-				Thread.sleep(1000);
-				x=1;
+				if(!Pagelinks.get(i).getText().equals("..."))
+				{
+					Pagelinks.get(i).click();
+					Thread.sleep(1000);
+				}
+	
+				
 				
 				//Restore Table details to avoid staleElement reference exception
 				Table=driver.findElement(By.xpath(table_Xpath));
@@ -455,6 +459,115 @@ public class Keywords {
 		
 		
 		return flag1;
+	}
+
+	/* Keyword:--> Click Update Inside Webtable on expected Branch record
+	 */
+	public void WebTable_Click_Deletion_Btn(String table_Xpath,String branchname,int Rownum, int Cellnum) throws Exception
+	{
+		boolean flag=false;
+		boolean flag1=false;
+	
+		do {
+			WebElement Table;
+			Table=driver.findElement(By.xpath(table_Xpath));
+			
+			WebElement Last_Row;
+			Last_Row=Table.findElements(By.tagName("tr")).get(Rownum);
+			
+			List<WebElement> Pagelinks;
+			Pagelinks=Last_Row.findElements(By.tagName("a"));
+			
+			int Link_Count;
+			Link_Count=Pagelinks.size();
+			System.out.println(Link_Count);
+			
+			for (int i = 0; i <= Link_Count-1; i++) 
+			{
+				//Find list of rows under each row
+				List<WebElement> Rows=Table.findElements(By.tagName("tr"));
+				int Rows_size=Rows.size();
+				
+				System.out.println("List of rows at each page is => " +Rows_size);
+				
+				//iterate for number of rows
+				for (int j = 1; j <=5; j++)
+				{
+					//Find list of cells under each row
+					List<WebElement> Cells=Rows.get(j).findElements(By.tagName("td"));
+					int Cell_size=Cells.size();
+					
+					//System.out.println("List of cells at each page is => " +Cell_size);
+					
+					//iterate for number of cells
+					for (int k = 0; k < Cell_size; k++) 
+					{
+						String EachCell_Text=Cells.get(k).getText();
+						
+						if (EachCell_Text.equals(branchname)) 
+						{
+							Cells.get(Cellnum).findElement(By.tagName("a")).click();
+							Thread.sleep(2000);
+
+							driver.switchTo().alert().accept();
+							
+							Thread.sleep(1000);
+							Alert_Handle();
+							flag1=true;
+							break;
+				
+						}
+						
+						
+					}
+					
+					if(flag1==true)
+					{
+						break;	
+					}
+							
+				}
+				
+				if(flag1==true)
+				{
+					break;	
+				}
+				
+				if(!Pagelinks.get(i).getText().equals("..."))
+				{
+					Pagelinks.get(i).click();
+					Thread.sleep(1000);
+				}
+	
+				//Restore Table details to avoid staleElement reference exception
+				Table=driver.findElement(By.xpath(table_Xpath));
+				Last_Row=Table.findElements(By.tagName("tr")).get(Rownum);
+				Pagelinks=Last_Row.findElements(By.tagName("a"));
+		
+			}
+			if(flag1==true)
+			{
+				break;
+			}
+			
+		
+			String Next;
+			Next=Pagelinks.get(Link_Count-1).getText();
+			
+			if(Next.equals("..."))
+			{
+				flag=true;
+				Pagelinks.get(Link_Count-1).click();
+				
+			}
+			
+			if (!Next.equals("..."))
+			{
+				flag=false;	
+			}
+			
+		} while (flag);
+
 	}
 
 }
