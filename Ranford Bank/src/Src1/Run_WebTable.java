@@ -28,25 +28,66 @@ public class Run_WebTable {
 	 ExtentTest test;
 	 String URL ="http://192.168.1.97/ebank2/home.aspx";
 		
-		
-		@Test
-		public void Update_Brnach_And_Verify_At_Webtable() throws Exception
+	  @Test(priority = 0)
+	  public void Admin_login() throws Exception  
+	  {
+		  Admin_With_Excel Admin= new Admin_With_Excel(driver);
+		  Admin.Excel_Admin_Login();
+		  
+		  if(driver.getTitle().equals("RANFORD BANK"))
+		  {
+			  test.log(LogStatus.INFO, "Expected Admin Page title presented");
+			 
+		  }
+				  
+		  else
+		  {
+			  test.log(LogStatus.FAIL, "Precondition failed, Admin page can not be displayed");
+	  
+		  }
+	  }
+	 
+		@Test(priority = 1,dependsOnMethods= "Admin_login")
+		public void Update_Branch_Webtable() throws Exception
 		{
+			Admin_Page Branchbtn = new Admin_Page(driver); 
+			Thread.sleep(500);
+			Branchbtn.Admin_Branches_btn.click();	 
+		
 			Keywords key=new Keywords(driver);
-			key.WebTable_Click_Update_Btn("//table[@id='DG_bankdetails']", "vamshi", 6, 6);
+			key.WebTable_Click_Update_Btn("//table[@id='DG_bankdetails']", "uppall", 6, 6); //(3page,47)
 			Webtable_Admin_Branch_Update Ubranch=new Webtable_Admin_Branch_Update(driver);
-			Ubranch.Branch_Updation("MQDS5", "Chaittanya", "Pjjuri", "Dshgnr", "Dsnr1", "12356", "INDIA", "MAHARASTRA", "MUMBAI");
+			Ubranch.Branch_Updation("MQDfSf", "Chaittanya", "Pjuri", "Dshgnr", "Dsnr1", "12356", "INDIA", "MAHARASTRA", "MUMBAI");
 		}
 		
-		@Test
+		@Test(priority = 2,dependsOnMethods= "Update_Branch_Webtable")
 		public void verify_branch_Availability_At_WebTable() throws Exception
 		{
+			Admin_Page Branchbtn = new Admin_Page(driver); 
+			Thread.sleep(500);
+			Branchbtn.Admin_Branches_btn.click();	 
 			
 			Keywords key=new Keywords(driver);
-			boolean flag=key.Verify_Webtable_Record_Available("//table[@id='DG_bankdetails']", 6,"MQDS5");
+			boolean flag=key.Verify_Webtable_Record_Available("//table[@id='DG_bankdetails']", 6,"MQDfSf");
 			Assert.assertTrue(flag);
 			System.out.println("Expected Record found at branch webtable");
+	
 		}
+		
+		@Test(priority=3)
+		public void Click_Deletion_Btn_WebTable() throws Exception
+		{
+			Admin_Page Branchbtn = new Admin_Page(driver); 
+			Thread.sleep(500);
+			Branchbtn.Admin_Branches_btn.click();	 
+			
+			Keywords key=new Keywords(driver);
+			key.WebTable_Click_Deletion_Btn("//table[@id='DG_bankdetails']", "mindqsystem12", 6,7);//18page,204
+			
+			System.out.println("Branchname has been deleted successfully");
+		
+		}
+		
 		
 		 @BeforeMethod
 		  public void beforeMethod(Method method) 
@@ -80,7 +121,8 @@ public class Run_WebTable {
 			  driver.get(URL);
 			  driver.manage().window().maximize();
 			  driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-			  //Admin login
+			  
+			 /* //Admin login
 			  driver.findElement(By.id("txtuId")).clear();
 			  driver.findElement(By.id("txtuId")).sendKeys("Admin");
 				
@@ -94,7 +136,7 @@ public class Run_WebTable {
 			  //branches
 			  driver.findElement(By.xpath("/html/body/table/tbody/tr/td/table/tbody/tr[4]/td/table/tbody/tr[1]/td[2]/table/tbody/tr[2]/td/table/tbody/tr[2]/td/a")).click();
 			  Thread.sleep(2000);
-
+			*/
 		  }
 		
 		  @AfterClass
