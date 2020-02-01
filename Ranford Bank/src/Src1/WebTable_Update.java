@@ -37,7 +37,7 @@ public class WebTable_Update {
 	
 	boolean flag = false;
 	boolean flag1= false;
-	int x=0;
+	//int x=0;
 	
 	
 	do {
@@ -52,14 +52,14 @@ public class WebTable_Update {
 		
 		int Linkcount;
 		Linkcount = Pagelinks.size();//Page links size = 10
-		System.out.println("linkname==>"+Linkcount);
+		System.out.println("linkcount==>"+Linkcount);
 		
 		//Inner loop
-		for(int i=x; i<= Linkcount-1; i++)
+		for(int i=0; i<= Linkcount-1; i++)
 		{
 			
 			List<WebElement> Rows= Table.findElements(By.tagName("tr"));
-			System.out.println("Number of Rows at Each Page-->"+Rows.size());
+			//System.out.println("Number of Rows at Each Page-->"+Rows.size());
 			
 			//Iterate for Number of rows
 			for(int j=1; j<=Rows.size()-2; j++) //Row size= 7
@@ -70,14 +70,15 @@ public class WebTable_Update {
 				for(int k=0; k<Cells.size();k++)
 				{
 					String EachCellText= Cells.get(k).getText();
-					if(EachCellText.equals("reddy123"))
+					
+					if(EachCellText.equals("Uganapathi"))
 					{
 			
 						Cells.get(6).findElement(By.tagName("a")).click();
 						Thread.sleep(1000);
 						
 						Webtable_Admin_Branch_Update Update=new Webtable_Admin_Branch_Update(driver);
-						Update.Branch_Updation("MQDSNR50124", "Chaittanya", "Puri", "Dsnr", "Dsnr1", "12356", "INDIA", "MAHARASTRA", "MUMBAI");
+						Update.Branch_Updation("MQrfd7124", "Chaittanya", "Puri", "Dsnr", "Dsnr1", "12356", "INDIA", "MAHARASTRA", "MUMBAI");
 						
 						Keywords Alert=new Keywords(driver);
 						Alert.Alert_Handle();
@@ -98,10 +99,12 @@ public class WebTable_Update {
 				
 			}
 			
-		
-			Pagelinks.get(i).click();
-			Thread.sleep(1000);
-			x=1;
+			if(!Pagelinks.get(i).getText().equals("..."))
+			{
+				Pagelinks.get(i).click();
+				Thread.sleep(1000);
+			}
+
 			//Restore Table details to avoid Stale Element reference exception
 			Table=driver.findElement(By.id("DG_bankdetails"));
 			
@@ -114,8 +117,9 @@ public class WebTable_Update {
 		{
 			break;
 		}
-		
+
 		String Next = Pagelinks.get(Linkcount-1).getText();
+
 		
 		if(Next.equals("..."))
 		{
