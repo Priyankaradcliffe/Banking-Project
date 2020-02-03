@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name = "default-suite">
+			<test verbose="2" name= "default-test1">
+					<classes>
+							<class name= "banking_Project_Admin.Run_Branch_WebTable">
+							
+							</class>
+							
+							<class name= "banking_Project_Admin.Run_Role_WebTable">
+							
+							</class>
+							
+							<class name= "banking_Project_Admin.Run_Employee_WebTable">
+							
+							</class>
+					</classes>
+			</test>
+</suite>
