@@ -1,9 +1,10 @@
-package ranfordBank;
+package banking_Project_Admin;
+
+import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
@@ -11,7 +12,6 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
@@ -55,12 +55,12 @@ public class Run_Role_WebTable{
 			Rolebtn.Admin_Roles_btn.click();	 
 		
 			Keywords key=new Keywords(driver);
-			key.WebTable_Click_Update_Btn("//table[@id='DG_bankdetails']", "Pikaa", 5, 3); //(3page,47)
+			key.WebTable_Click_Update_Btn("//table[@id='DGRoles']", "prashanthi8", 5, 3); //(36page,139)
 			WebTable_Admin_Role_Update Ubranch=new WebTable_Admin_Role_Update(driver);
-			Ubranch.Role_Updation("PikaTeller", "Teller", "E");
+			Ubranch.Role_Updation("prashanthii", "Teller", "E");
 		}
 		
-		@Test(priority = 2,dependsOnMethods= "Update_RoleWebtable")
+		@Test(priority = 2,dependsOnMethods= "Update_Role_Webtable")
 		public void verify_Role_Availability_At_WebTable() throws Exception
 		{
 			Admin_Page Rolebtn = new Admin_Page(driver); 
@@ -68,7 +68,7 @@ public class Run_Role_WebTable{
 			Rolebtn.Admin_Roles_btn.click();	 
 			
 			Keywords key=new Keywords(driver);
-			boolean flag=key.Verify_Webtable_Record_Available("//table[@id='DG_bankdetails']",5,"PikaTeller");
+			boolean flag=key.Verify_Webtable_Record_Available("//table[@id='DGRoles']",5,"prashanthii");
 			Assert.assertTrue(flag);
 			System.out.println("Expected Record has been found at Role webtable");
 	
@@ -82,10 +82,8 @@ public class Run_Role_WebTable{
 			Rolebtn.Admin_Roles_btn.click();	 
 			
 			Keywords key=new Keywords(driver);
-			key.WebTable_Click_Deletion_Btn("//table[@id='DG_bankdetails']", "mindqsystem12", 5,4);//18page,204
-			
-			System.out.println("Role name has been deleted successfully");
-		
+			key.WebTable_Click_Deletion_Btn("//table[@id='DGRoles']", "adygtaerhj", 5,4);//36page,137
+
 		}
 		
 		
@@ -149,6 +147,4 @@ public class Run_Role_WebTable{
 		  }
 
 }
-
-
 
