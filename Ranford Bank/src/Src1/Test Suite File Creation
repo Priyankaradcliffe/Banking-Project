@@ -12,7 +12,7 @@ Syntax:
 						<methods>
 										<include name="Method Name"></include>
 										<include name="Method Name"></include>
-								</methods>
+						</methods>
 				</classes>
 		</test>
 </suite>
