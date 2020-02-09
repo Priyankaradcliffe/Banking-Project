@@ -16,7 +16,7 @@ public class Admin_Page
 	/*
 	 * Admin Page
 	 * 
-	 * Author: R Priyanka
+	 * Author: Rapolu Priyanka
 	 * 
 	 */
 	
